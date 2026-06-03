@@ -1,4 +1,4 @@
-import { GoogleGenAI } from '@google/genai';
+import { OpenRouter } from '@openrouter/sdk';
 import crypto from 'crypto';
 
 interface Submodule {
@@ -45,15 +45,17 @@ export async function generateProjectScope(
   budget?: string,
   timeline?: string
 ): Promise<ScopeOutput> {
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = process.env.OPENROUTER_API_KEY;
 
   if (!apiKey) {
-    console.warn('GEMINI_API_KEY is not defined. Falling back to Mock Scope Generator.');
+    console.warn('OPENROUTER_API_KEY is not defined. Falling back to Mock Scope Generator.');
     return generateMockScope(inputText, industry, budget, timeline);
   }
 
   try {
-    const ai = new GoogleGenAI({ apiKey });
+    const openrouter = new OpenRouter({
+      apiKey: apiKey,
+    });
 
     const prompt = `You are a world-class IT Business Analyst and Pre-sales Engineer for premium software agencies.
 Your task is to analyze a rough client project idea and compile a highly structured, comprehensive, and realistic project scope proposal.
@@ -108,15 +110,24 @@ interface ScopeOutput {
 
 Return ONLY the raw JSON object, without any markdown formatting or surrounding codeblocks. Just the pure string JSON.`;
 
-    const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
-      contents: prompt,
-      config: {
-        responseMimeType: 'application/json',
-      },
+    let text = '';
+    const stream = await openrouter.chat.send({
+      model: 'nvidia/nemotron-3-super-120b-a12b:free',
+      messages: [
+        {
+          role: 'user',
+          content: prompt,
+        },
+      ],
+      stream: true,
     });
 
-    const text = response.text;
+    for await (const chunk of stream) {
+      const content = chunk.choices[0]?.delta?.content;
+      if (content) {
+        text += content;
+      }
+    }
     if (!text) {
       throw new Error('Gemini returned an empty response.');
     }

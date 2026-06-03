@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { ScopeOutput, Module, Submodule } from '@/lib/gemini';
 import { HOURS_PER_DAY } from '@/lib/constants';
-import { 
-  Save, Download, Printer, Plus, Trash2, 
-  ChevronDown, ChevronUp, Layers, Cpu, ShieldAlert, 
+import {
+  Save, Download, Printer, Plus, Trash2,
+  ChevronDown, ChevronUp, Layers, Cpu, ShieldAlert,
   HelpCircle, Check, ArrowLeft, Loader2
 } from 'lucide-react';
 import Link from 'next/link';
@@ -43,7 +43,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
     (project.estimateUnit as 'days' | 'hours') || 'days'
   );
   const [activeTab, setActiveTab] = useState<'overview' | 'scope' | 'milestones' | 'risks'>('scope');
-  
+
   // Expanded modules tracker
   const [expandedModules, setExpandedModules] = useState<Record<string, boolean>>({
     [scope.modules?.[0]?.id || '']: true
@@ -151,9 +151,9 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
   // Update a sub-module field (name, description, difficulty)
   const handleSubmoduleFieldChange = (
-    moduleId: string, 
-    subId: string, 
-    field: keyof Submodule, 
+    moduleId: string,
+    subId: string,
+    field: keyof Submodule,
     value: string
   ) => {
     setScope(prev => ({
@@ -249,7 +249,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
   // Delete entire main module
   const handleDeleteModule = (moduleId: string) => {
     if (!confirm('Are you sure you want to delete this entire module and all its sub-features?')) return;
-    
+
     setScope(prev => ({
       ...prev,
       modules: prev.modules.filter(m => m.id !== moduleId)
@@ -411,10 +411,10 @@ export default function ProjectClient({ project }: ProjectClientProps) {
   return (
     <div className="space-y-8 print-container">
       {/* Back button and sticky status toolbar (no-print) */}
-      <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center no-print border-b border-white/5 pb-4">
+      <div className="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center no-print border-b border-theme-border pb-4">
         <Link
           href="/history"
-          className="flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-white transition-colors"
+          className="flex items-center gap-1.5 text-xs font-semibold text-theme-on-surface-variant hover:text-theme-on-background transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Back to Proposal History</span>
@@ -423,7 +423,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
         {/* Dynamic Saving Indicator */}
         <div className="flex flex-wrap items-center gap-3">
           {saveSuccess && (
-            <span className="flex items-center gap-1 text-xs text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-1 rounded-lg animate-pulse">
+            <span className="flex items-center gap-1 text-xs text-emerald-700 font-bold bg-emerald-100 border border-emerald-200 px-2.5 py-1 rounded-lg animate-pulse">
               <Check className="w-3.5 h-3.5" />
               <span>Project Saved!</span>
             </span>
@@ -432,7 +432,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-xs font-bold transition-all duration-200"
+            className="theme-btn-primary flex items-center gap-1.5 px-4 py-2 rounded-xl disabled:opacity-50 text-xs font-bold transition-all duration-200"
           >
             {saving ? (
               <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -444,7 +444,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
           <button
             onClick={handleExportCSV}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-slate-900 border border-white/10 hover:bg-slate-800 text-xs font-bold text-slate-300 hover:text-white transition-colors"
+            className="theme-btn-secondary flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-colors"
           >
             <Download className="w-3.5 h-3.5" />
             <span>Export CSV</span>
@@ -452,7 +452,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
           <button
             onClick={handlePrintPDF}
-            className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-bold text-white transition-colors"
+            className="theme-btn-primary flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-colors"
           >
             <Printer className="w-3.5 h-3.5" />
             <span>Print PDF</span>
@@ -461,54 +461,52 @@ export default function ProjectClient({ project }: ProjectClientProps) {
       </div>
 
       {/* Header Info Block */}
-      <div className="glass-panel p-6 rounded-3xl border border-white/5 flex flex-col md:flex-row gap-6 justify-between items-start md:items-center relative">
+      <div className="theme-panel p-6 rounded-3xl flex flex-col md:flex-row gap-6 justify-between items-start md:items-center relative">
         <div className="space-y-1.5 flex-1 w-full">
-          <span className="text-[10px] tracking-wider uppercase font-bold text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-2.5 py-0.5 rounded-full inline-block">
+          <span className="theme-tag text-[10px] tracking-wider uppercase font-bold">
             Proposal Scope Document
           </span>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full bg-transparent border-b border-transparent hover:border-white/20 focus:border-indigo-500 text-2xl sm:text-3xl font-extrabold text-white focus:outline-none py-1 transition-colors"
+            className="w-full theme-input text-2xl sm:text-3xl font-extrabold text-theme-on-surface focus:outline-none py-1 transition-colors"
           />
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-theme-on-surface-variant">
             Analysed from idea: &ldquo;{project.inputText}&rdquo;
           </p>
         </div>
 
         {/* Global Days/Hours Estimate Controller */}
         <div className="flex flex-col items-start md:items-end gap-2.5 shrink-0 no-print">
-          <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+          <span className="text-[10px] font-bold uppercase tracking-wider text-theme-on-surface-variant">
             Total Estimated Scope
           </span>
           <div className="flex items-center gap-4">
-            <span className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-white via-indigo-200 to-indigo-400 bg-clip-text text-transparent">
+            <span className="text-2xl sm:text-3xl font-black theme-gradient-text">
               {calculateProjectTotal()}{' '}
-              <span className="text-lg font-bold text-slate-400 uppercase">
+              <span className="text-lg font-bold text-theme-on-surface uppercase">
                 {estimateUnit}
               </span>
             </span>
-            <div className="inline-flex bg-slate-900 border border-white/10 p-1 rounded-xl">
+            <div className="inline-flex theme-panel-lite p-1 rounded-xl">
               <button
                 type="button"
                 onClick={() => toggleUnit('days')}
-                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                  estimateUnit === 'days'
-                    ? 'bg-indigo-600 text-white shadow-lg'
-                    : 'text-slate-400 hover:text-white'
-                }`}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${estimateUnit === 'days'
+                    ? 'theme-btn-primary shadow-lg text-on-primary'
+                    : 'text-theme-on-surface-variant hover:text-theme-on-background'
+                  }`}
               >
                 Days
               </button>
               <button
                 type="button"
                 onClick={() => toggleUnit('hours')}
-                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
-                  estimateUnit === 'hours'
-                    ? 'bg-indigo-600 text-white shadow-lg'
-                    : 'text-slate-400 hover:text-white'
-                }`}
+                className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${estimateUnit === 'hours'
+                    ? 'theme-btn-primary shadow-lg text-on-primary'
+                    : 'text-theme-on-surface-variant hover:text-theme-on-background'
+                  }`}
               >
                 Hours
               </button>
@@ -518,24 +516,23 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
         {/* Print-only Total badge */}
         <div className="hidden print:block text-right">
-          <div className="text-xs font-bold text-slate-500">TOTAL ESTIMATED TIMELINE</div>
-          <div className="text-2xl font-black text-slate-900">
+          <div className="text-xs font-bold text-theme-on-surface-variant">TOTAL ESTIMATED TIMELINE</div>
+          <div className="text-2xl font-black text-theme-on-background">
             {calculateProjectTotal()} {estimateUnit.toUpperCase()}
           </div>
         </div>
       </div>
 
       {/* Navigation tabs (no-print) */}
-      <div className="flex border-b border-white/5 no-print gap-1 select-none">
+      <div className="flex border-b border-theme-border no-print gap-1 select-none">
         {(['scope', 'overview', 'milestones', 'risks'] as const).map(tab => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2.5 text-sm font-semibold border-b-2 capitalize transition-all duration-200 ${
-              activeTab === tab
-                ? 'border-indigo-500 text-indigo-400 font-bold bg-white/2'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
-            }`}
+            className={`px-4 py-2.5 text-sm font-semibold border-b-2 capitalize transition-all duration-200 ${activeTab === tab
+                ? 'border-theme-border text-primary font-bold bg-surface-container-lowest'
+                : 'border-transparent text-theme-on-surface-variant hover:text-theme-on-background'
+              }`}
           >
             {tab === 'scope' ? 'Detailed Scope Matrix' : tab}
           </button>
@@ -544,20 +541,20 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
       {/* Active Tab View */}
       <div className="space-y-6">
-        
+
         {/* ==================== 1. DETAILED SCOPE TAB ==================== */}
         {activeTab === 'scope' && (
           <div className="space-y-6">
             <div className="flex justify-between items-center no-print">
               <div>
-                <h3 className="text-lg font-bold text-white">Hierarchical Features Registry</h3>
-                <p className="text-xs text-slate-400">
+                <h3 className="text-lg font-bold text-theme-on-surface">Hierarchical Features Registry</h3>
+                <p className="text-xs text-theme-on-surface-variant">
                   Main modules sum child values automatically. Double-click or select boxes to update values.
                 </p>
               </div>
               <button
                 onClick={handleAddModule}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-dashed border-indigo-500/40 hover:border-indigo-500 bg-indigo-500/5 hover:bg-indigo-500/10 text-xs font-bold text-indigo-300 transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl theme-btn-secondary border-dashed border-theme-border text-xs font-bold transition-colors"
               >
                 <Plus className="w-3.5 h-3.5" />
                 <span>Add Module</span>
@@ -575,38 +572,38 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                 return (
                   <div
                     key={mod.id}
-                    className="rounded-2xl border border-white/5 overflow-hidden transition-all bg-slate-900/30"
+                    className="rounded-2xl border border-theme-border overflow-hidden transition-all theme-panel-lite"
                   >
                     {/* Module Accordion Header */}
                     <div
-                      className="w-full flex items-center justify-between p-4 bg-slate-900/60 border-b border-white/5 select-none relative"
+                      className="w-full flex items-center justify-between p-4 border-b border-theme-border select-none relative bg-surface-container-lowest"
                     >
                       <div className="flex items-center gap-3 flex-1">
-                        <Layers className="w-4 h-4 text-indigo-400 shrink-0" />
+                        <Layers className="w-4 h-4 text-primary shrink-0" />
                         <input
                           type="text"
                           value={mod.name}
                           onChange={(e) => handleModuleNameChange(mod.id, e.target.value)}
-                          className="bg-transparent border-b border-transparent hover:border-white/20 focus:border-indigo-500 text-sm md:text-base font-bold text-white focus:outline-none py-0.5 w-full mr-4 transition-colors"
+                          className="bg-transparent border-b border-transparent hover:border-theme-border focus:border-theme-border text-sm md:text-base font-bold text-theme-on-surface focus:outline-none py-0.5 w-full mr-4 transition-colors"
                         />
                       </div>
-                      
+
                       {/* Badge / Sum */}
                       <div className="flex items-center gap-3 shrink-0">
-                        <span className="px-2.5 py-1 rounded-md bg-indigo-500/15 text-indigo-300 text-xs font-bold border border-indigo-500/20">
+                        <span className="theme-tag text-xs font-bold px-2.5 py-1 rounded-md">
                           {totalModEstimates} {estimateUnit}
                         </span>
 
                         <div className="flex items-center gap-1.5 no-print">
                           <button
                             onClick={() => toggleModule(mod.id)}
-                            className="p-1 rounded-lg hover:bg-white/5 text-slate-400 hover:text-white"
+                            className="p-1 rounded-lg hover:bg-white/5 text-theme-on-surface-variant hover:text-theme-on-surface"
                           >
                             {isExpanded ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
                           </button>
                           <button
                             onClick={() => handleDeleteModule(mod.id)}
-                            className="p-1 rounded-lg hover:bg-red-500/10 text-slate-500 hover:text-red-400 transition-colors"
+                            className="theme-btn-danger p-1 rounded-lg transition-colors"
                             title="Delete Module"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -617,9 +614,9 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
                     {/* Module Child submodules list */}
                     {isExpanded && (
-                      <div className="p-4 space-y-4 bg-slate-950/20">
+                      <div className="p-4 space-y-4 theme-panel-lite">
                         {mod.submodules.length === 0 ? (
-                          <div className="text-center py-6 text-xs text-slate-500">
+                          <div className="text-center py-6 text-xs text-theme-on-surface-variant">
                             No child sub-features in this module. Add one below!
                           </div>
                         ) : (
@@ -627,7 +624,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                             {mod.submodules.map(sub => (
                               <div
                                 key={sub.id}
-                                className="glass-card p-4 rounded-xl border border-white/5 relative group/card flex flex-col md:flex-row justify-between gap-4"
+                                className="theme-card p-4 rounded-xl border border-theme-border relative group/card flex flex-col md:flex-row justify-between gap-4"
                               >
                                 {/* Left Side: Details inputs */}
                                 <div className="space-y-2 flex-1">
@@ -636,15 +633,15 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                                       type="text"
                                       value={sub.name}
                                       onChange={(e) => handleSubmoduleFieldChange(mod.id, sub.id, 'name', e.target.value)}
-                                      className="bg-transparent border-b border-transparent hover:border-white/20 focus:border-indigo-500 text-sm font-bold text-white focus:outline-none w-full max-w-sm transition-colors"
+                                      className="bg-transparent border-b border-transparent hover:border-theme-border focus:border-theme-border text-sm font-bold text-theme-on-surface focus:outline-none w-full max-w-sm transition-colors"
                                       placeholder="Sub-feature title"
                                     />
-                                    
+
                                     {/* Difficulty Badge */}
                                     <select
                                       value={sub.difficulty}
                                       onChange={(e) => handleSubmoduleFieldChange(mod.id, sub.id, 'difficulty', e.target.value)}
-                                      className="bg-slate-900 text-slate-300 border border-white/10 rounded-md text-[10px] font-bold px-2 py-0.5 focus:outline-none focus:border-indigo-500 print:border-none"
+                                      className="theme-input text-theme-on-surface rounded-md text-[10px] font-bold px-2 py-0.5 focus:outline-none focus:border-theme-border print:border-none"
                                     >
                                       <option value="Easy">Easy</option>
                                       <option value="Medium">Medium</option>
@@ -656,7 +653,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                                     rows={2}
                                     value={sub.description}
                                     onChange={(e) => handleSubmoduleFieldChange(mod.id, sub.id, 'description', e.target.value)}
-                                    className="w-full bg-transparent text-xs text-slate-400 placeholder-slate-600 focus:outline-none hover:border-b hover:border-white/10 focus:border-b focus:border-indigo-500 py-1 transition-colors resize-none"
+                                    className="w-full bg-transparent text-xs text-theme-on-surface-variant placeholder-theme-on-surface-variant focus:outline-none hover:border-b hover:border-theme-border focus:border-b focus:border-theme-border py-1 transition-colors resize-none"
                                     placeholder="Feature description scope..."
                                   />
                                 </div>
@@ -664,7 +661,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                                 {/* Right Side: Numerical estimate input */}
                                 <div className="flex items-center gap-4 justify-between md:justify-end shrink-0 select-none">
                                   <div className="space-y-1 text-left md:text-right">
-                                    <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">
+                                    <label className="text-[10px] font-bold text-theme-on-surface-variant uppercase tracking-wider block">
                                       Estimate ({estimateUnit})
                                     </label>
                                     <input
@@ -673,14 +670,14 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                                       min={0}
                                       value={toDisplayVal(sub.estimate)}
                                       onChange={(e) => handleSubmoduleEstimateChange(mod.id, sub.id, e.target.value)}
-                                      className="bg-slate-900 border border-white/10 rounded-lg px-2.5 py-1 text-sm font-bold text-indigo-300 text-center w-20 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 print:bg-transparent print:border-none"
+                                      className="theme-input rounded-lg px-2.5 py-1 text-sm font-bold text-theme-on-surface text-center w-20 focus:outline-none focus:border-theme-border focus:ring-1 focus:ring-indigo-200 print:bg-transparent print:border-none"
                                     />
                                   </div>
 
                                   {/* Delete feature button */}
                                   <button
                                     onClick={() => handleDeleteSubmodule(mod.id, sub.id)}
-                                    className="p-2 rounded-lg bg-red-500/5 hover:bg-red-500/10 hover:text-red-400 text-slate-600 transition-colors mt-4 md:mt-0 no-print"
+                                    className="theme-btn-danger p-2 rounded-lg no-print"
                                     title="Delete Sub-feature"
                                   >
                                     <Trash2 className="w-4 h-4" />
@@ -695,7 +692,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                         <div className="pt-2 no-print">
                           <button
                             onClick={() => handleAddSubmodule(mod.id)}
-                            className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-dashed border-white/10 hover:border-indigo-500/40 text-[10px] font-bold text-slate-400 hover:text-indigo-300 transition-colors"
+                            className="flex items-center gap-1 px-3 py-1.5 rounded-lg border border-dashed border-theme-border hover:border-theme-border text-[10px] font-bold text-theme-on-surface-variant hover:text-primary transition-colors"
                           >
                             <Plus className="w-3.5 h-3.5" />
                             <span>Add Sub-feature</span>
@@ -715,31 +712,31 @@ export default function ProjectClient({ project }: ProjectClientProps) {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Summary details */}
             <div className="lg:col-span-2 space-y-6">
-              <div className="glass-panel p-6 rounded-3xl border border-white/5 space-y-4">
-                <h3 className="text-base font-bold text-white border-b border-white/5 pb-2">Executive Summary</h3>
+              <div className="theme-panel p-6 rounded-3xl border border-theme-border space-y-4">
+                <h3 className="text-base font-bold text-theme-on-surface border-b border-theme-border pb-2">Executive Summary</h3>
                 <textarea
                   rows={4}
                   value={scope.summary}
                   onChange={(e) => handleOverviewChange('summary', e.target.value)}
-                  className="w-full bg-slate-950/40 border border-white/10 rounded-xl p-3.5 text-sm text-slate-300 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                  className="w-full theme-panel-lite border border-theme-border rounded-xl p-3.5 text-sm text-theme-on-surface placeholder-theme-on-surface-variant focus:outline-none focus:border-theme-border focus:ring-1 focus:ring-indigo-500 transition-colors"
                 />
               </div>
 
               {/* Technical Stack Grid */}
-              <div className="glass-panel p-6 rounded-3xl border border-white/5 space-y-4">
-                <h3 className="text-base font-bold text-white border-b border-white/5 pb-2 flex items-center gap-2">
-                  <Cpu className="w-4 h-4 text-indigo-400" />
+              <div className="theme-panel p-6 rounded-3xl border border-theme-border space-y-4">
+                <h3 className="text-base font-bold text-theme-on-surface border-b border-theme-border pb-2 flex items-center gap-2">
+                  <Cpu className="w-4 h-4 text-primary" />
                   <span>Suggested Technical Stack</span>
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {(['frontend', 'backend', 'database', 'infrastructure'] as const).map(layer => (
-                    <div key={layer} className="p-4 bg-slate-900/40 rounded-xl border border-white/5 space-y-2">
+                    <div key={layer} className="p-4 theme-panel-lite rounded-xl border border-theme-border space-y-2">
                       <div className="flex justify-between items-center">
-                        <span className="text-xs font-bold text-indigo-400 capitalize">{layer}</span>
+                        <span className="text-xs font-bold text-primary capitalize">{layer}</span>
                         <button
                           onClick={() => handleAddStackItem(layer)}
-                          className="text-[10px] text-indigo-300 hover:text-white font-bold no-print"
+                          className="text-[10px] text-primary hover:text-theme-on-surface font-bold no-print"
                         >
                           + Add
                         </button>
@@ -752,11 +749,11 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                               type="text"
                               value={tech}
                               onChange={(e) => handleStackChange(layer, idx, e.target.value)}
-                              className="bg-transparent border-b border-transparent hover:border-white/10 focus:border-indigo-500 text-xs font-semibold text-slate-300 focus:outline-none py-0.5 w-full transition-colors"
+                              className="bg-transparent border-b border-transparent hover:border-theme-border focus:border-theme-border text-xs font-semibold text-theme-on-surface focus:outline-none py-0.5 w-full transition-colors"
                             />
                             <button
                               onClick={() => handleDeleteStackItem(layer, idx)}
-                              className="text-slate-600 hover:text-red-400 text-[10px] font-semibold no-print"
+                              className="text-theme-on-surface-variant hover:text-theme-on-background text-[10px] font-semibold no-print"
                             >
                               x
                             </button>
@@ -772,21 +769,21 @@ export default function ProjectClient({ project }: ProjectClientProps) {
             {/* Right sidebar info */}
             <div className="space-y-6">
               {/* Complexity */}
-              <div className="glass-panel p-6 rounded-3xl border border-white/5 space-y-4">
-                <h3 className="text-base font-bold text-white border-b border-white/5 pb-2 flex items-center gap-2">
-                  <ShieldAlert className="w-4 h-4 text-indigo-400" />
+              <div className="theme-panel p-6 rounded-3xl border border-theme-border space-y-4">
+                <h3 className="text-base font-bold text-theme-on-surface border-b border-theme-border pb-2 flex items-center gap-2">
+                  <ShieldAlert className="w-4 h-4 text-primary" />
                   <span>Complexity Analysis</span>
                 </h3>
 
                 <div className="space-y-4">
                   <div>
-                    <label className="text-[10px] font-bold text-slate-400 uppercase block mb-1">
+                    <label className="text-[10px] font-bold text-theme-on-surface-variant uppercase block mb-1">
                       Project Complexity
                     </label>
                     <select
                       value={scope.complexity}
                       onChange={(e) => handleOverviewChange('complexity', e.target.value)}
-                      className="bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-sm font-bold text-indigo-300 focus:outline-none focus:border-indigo-500 w-full"
+                      className="theme-input rounded-xl px-3 py-2 text-sm font-bold text-primary focus:outline-none focus:border-theme-border w-full"
                     >
                       <option value="Low">Low Complexity</option>
                       <option value="Medium">Medium Complexity</option>
@@ -795,33 +792,33 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-bold text-slate-400 uppercase block mb-1">
+                    <label className="text-[10px] font-bold text-theme-on-surface-variant uppercase block mb-1">
                       Reasoning
                     </label>
                     <textarea
                       rows={3}
                       value={scope.complexityReasoning}
                       onChange={(e) => handleOverviewChange('complexityReasoning', e.target.value)}
-                      className="w-full bg-slate-950/40 border border-white/10 rounded-xl p-2.5 text-xs text-slate-400 placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                      className="w-full theme-panel-lite border border-theme-border rounded-xl p-2.5 text-xs text-theme-on-surface-variant placeholder-theme-on-surface-variant focus:outline-none focus:border-theme-border focus:ring-1 focus:ring-indigo-500 transition-colors"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Targets info */}
-              <div className="glass-panel p-6 rounded-3xl border border-white/5 space-y-3.5 text-xs">
-                <h3 className="font-bold text-white border-b border-white/5 pb-2">Client Parameters</h3>
+              <div className="theme-panel p-6 rounded-3xl border border-theme-border space-y-3.5 text-xs">
+                <h3 className="font-bold text-theme-on-surface border-b border-theme-border pb-2">Client Parameters</h3>
                 <div>
-                  <span className="text-slate-400 block font-semibold">Target Industry:</span>
-                  <span className="text-indigo-300 font-bold text-sm block mt-0.5">{project.industry || 'TBD'}</span>
+                  <span className="text-theme-on-surface-variant block font-semibold">Target Industry:</span>
+                  <span className="text-primary font-bold text-sm block mt-0.5">{project.industry || 'TBD'}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block font-semibold">Target Budget:</span>
-                  <span className="text-indigo-300 font-bold text-sm block mt-0.5">{project.budget || 'TBD'}</span>
+                  <span className="text-theme-on-surface-variant block font-semibold">Target Budget:</span>
+                  <span className="text-primary font-bold text-sm block mt-0.5">{project.budget || 'TBD'}</span>
                 </div>
                 <div>
-                  <span className="text-slate-400 block font-semibold">Target Timeline:</span>
-                  <span className="text-indigo-300 font-bold text-sm block mt-0.5">{project.timeline || 'TBD'}</span>
+                  <span className="text-theme-on-surface-variant block font-semibold">Target Timeline:</span>
+                  <span className="text-primary font-bold text-sm block mt-0.5">{project.timeline || 'TBD'}</span>
                 </div>
               </div>
             </div>
@@ -830,12 +827,12 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
         {/* ==================== 3. MILESTONES TAB ==================== */}
         {activeTab === 'milestones' && (
-          <div className="glass-panel p-6 rounded-3xl border border-white/5 space-y-6">
-            <div className="flex justify-between items-center border-b border-white/5 pb-2">
-              <h3 className="text-base font-bold text-white">Suggested Delivery Milestones</h3>
+          <div className="theme-panel p-6 rounded-3xl border border-theme-border space-y-6">
+            <div className="flex justify-between items-center border-b border-theme-border pb-2">
+              <h3 className="text-base font-bold text-theme-on-surface">Suggested Delivery Milestones</h3>
               <button
                 onClick={handleAddMilestone}
-                className="text-xs text-indigo-300 hover:text-white font-bold no-print"
+                className="text-xs text-primary hover:text-theme-on-surface font-bold no-print"
               >
                 + Add Phase
               </button>
@@ -843,13 +840,13 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
             <div className="space-y-4">
               {(scope.milestones || []).map((mile, idx) => (
-                <div key={idx} className="p-4 bg-slate-900/40 rounded-xl border border-white/5 relative group/milestone space-y-3">
+                <div key={idx} className="p-4 theme-panel-lite rounded-xl border border-theme-border relative group/milestone space-y-3">
                   <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-3">
                     <input
                       type="text"
                       value={mile.phase}
                       onChange={(e) => handleMilestoneChange(idx, 'phase', e.target.value)}
-                      className="bg-transparent border-b border-transparent hover:border-white/20 focus:border-indigo-500 text-sm font-bold text-white focus:outline-none py-0.5 w-full max-w-md transition-colors"
+                      className="bg-transparent border-b border-transparent hover:border-theme-border focus:border-theme-border text-sm font-bold text-theme-on-surface focus:outline-none py-0.5 w-full max-w-md transition-colors"
                       placeholder="Phase title..."
                     />
 
@@ -858,13 +855,13 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                         type="text"
                         value={mile.duration}
                         onChange={(e) => handleMilestoneChange(idx, 'duration', e.target.value)}
-                        className="bg-slate-950 border border-white/10 rounded-lg px-2 py-1 text-xs text-center text-slate-300 w-24 focus:outline-none focus:border-indigo-500"
+                        className="theme-input rounded-lg px-2 py-1 text-xs text-center text-theme-on-surface w-24 focus:outline-none focus:border-theme-border"
                         placeholder="2 weeks"
                       />
 
                       <button
                         onClick={() => handleDeleteMilestone(idx)}
-                        className="p-1 rounded bg-red-500/5 hover:bg-red-500/10 text-slate-500 hover:text-red-400 no-print"
+                        className="theme-btn-danger p-1 rounded-lg no-print"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>
@@ -873,10 +870,10 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
                   {/* Deliverables lists */}
                   <div className="space-y-1 text-xs">
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Deliverables:</span>
+                    <span className="text-[10px] font-bold text-theme-on-surface-variant uppercase tracking-wider block">Deliverables:</span>
                     {(mile.deliverables || []).map((del, dIdx) => (
                       <div key={dIdx} className="flex items-center gap-2">
-                        <span className="text-indigo-400 font-bold shrink-0">•</span>
+                        <span className="text-primary font-bold shrink-0">•</span>
                         <input
                           type="text"
                           value={del}
@@ -885,14 +882,14 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                             updatedDelList[dIdx] = e.target.value;
                             handleMilestoneChange(idx, 'deliverables', updatedDelList);
                           }}
-                          className="bg-transparent border-b border-transparent hover:border-white/20 focus:border-indigo-500 text-xs text-slate-300 focus:outline-none w-full"
+                          className="bg-transparent border-b border-transparent hover:border-theme-border focus:border-theme-border text-xs text-theme-on-surface focus:outline-none w-full"
                         />
                         <button
                           onClick={() => {
                             const updatedDelList = mile.deliverables.filter((_, subIdx) => subIdx !== dIdx);
                             handleMilestoneChange(idx, 'deliverables', updatedDelList);
                           }}
-                          className="text-slate-600 hover:text-red-400 text-[10px] no-print"
+                          className="text-theme-on-surface-variant hover:text-theme-on-background text-[10px] no-print"
                         >
                           x
                         </button>
@@ -903,7 +900,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                         const updatedDelList = [...(mile.deliverables || []), 'New key deliverable'];
                         handleMilestoneChange(idx, 'deliverables', updatedDelList);
                       }}
-                      className="text-[10px] text-indigo-400 hover:text-indigo-300 font-bold mt-1.5 block no-print"
+                      className="text-[10px] text-primary hover:text-primary font-bold mt-1.5 block no-print"
                     >
                       + Add Deliverable
                     </button>
@@ -917,17 +914,17 @@ export default function ProjectClient({ project }: ProjectClientProps) {
         {/* ==================== 4. RISKS & ASSUMPTIONS TAB ==================== */}
         {activeTab === 'risks' && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
+
             {/* Risks Columns */}
-            <div className="glass-panel p-6 rounded-3xl border border-white/5 space-y-4">
-              <div className="flex justify-between items-center border-b border-white/5 pb-2">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <ShieldAlert className="w-4 h-4 text-indigo-400" />
+            <div className="theme-panel p-6 rounded-3xl border border-theme-border space-y-4">
+              <div className="flex justify-between items-center border-b border-theme-border pb-2">
+                <h3 className="text-base font-bold text-theme-on-surface flex items-center gap-2">
+                  <ShieldAlert className="w-4 h-4 text-primary" />
                   <span>Potential Risks & Mitigations</span>
                 </h3>
                 <button
                   onClick={handleAddRisk}
-                  className="text-xs text-indigo-300 hover:text-white font-bold no-print"
+                  className="text-xs text-primary hover:text-theme-on-surface font-bold no-print"
                 >
                   + Add Risk
                 </button>
@@ -935,18 +932,18 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
               <div className="space-y-4">
                 {(scope.risks || []).map((risk, idx) => (
-                  <div key={idx} className="p-3 bg-slate-900/40 rounded-xl border border-white/5 space-y-2">
+                  <div key={idx} className="p-3 theme-panel-lite rounded-xl border border-theme-border space-y-2">
                     <div className="flex justify-between items-start">
                       <input
                         type="text"
                         value={risk.risk}
                         onChange={(e) => handleRiskChange(idx, 'risk', e.target.value)}
-                        className="bg-transparent border-b border-transparent hover:border-white/20 focus:border-indigo-500 text-xs font-bold text-white focus:outline-none w-full mr-4"
+                        className="bg-transparent border-b border-transparent hover:border-theme-border focus:border-theme-border text-xs font-bold text-theme-on-surface focus:outline-none w-full mr-4"
                         placeholder="Risk description..."
                       />
                       <button
                         onClick={() => handleDeleteRisk(idx)}
-                        className="text-slate-600 hover:text-red-400 no-print"
+                        className="text-theme-on-surface-variant hover:text-theme-on-background no-print"
                       >
                         x
                       </button>
@@ -956,7 +953,7 @@ export default function ProjectClient({ project }: ProjectClientProps) {
                       rows={2}
                       value={risk.mitigation}
                       onChange={(e) => handleRiskChange(idx, 'mitigation', e.target.value)}
-                      className="w-full bg-transparent text-[11px] text-slate-400 placeholder-slate-600 focus:outline-none hover:border-b hover:border-white/10 focus:border-b focus:border-indigo-500 py-0.5 resize-none"
+                      className="w-full bg-transparent text-[11px] text-theme-on-surface-variant placeholder-theme-on-surface-variant focus:outline-none hover:border-b hover:border-theme-border focus:border-b focus:border-theme-border py-0.5 resize-none"
                       placeholder="Mitigation details..."
                     />
                   </div>
@@ -965,15 +962,15 @@ export default function ProjectClient({ project }: ProjectClientProps) {
             </div>
 
             {/* Assumptions Columns */}
-            <div className="glass-panel p-6 rounded-3xl border border-white/5 space-y-4">
-              <div className="flex justify-between items-center border-b border-white/5 pb-2">
-                <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <HelpCircle className="w-4 h-4 text-indigo-400" />
+            <div className="theme-panel p-6 rounded-3xl border border-theme-border space-y-4">
+              <div className="flex justify-between items-center border-b border-theme-border pb-2">
+                <h3 className="text-base font-bold text-theme-on-surface flex items-center gap-2">
+                  <HelpCircle className="w-4 h-4 text-primary" />
                   <span>Core Proposals Assumptions</span>
                 </h3>
                 <button
                   onClick={handleAddAssumption}
-                  className="text-xs text-indigo-300 hover:text-white font-bold no-print"
+                  className="text-xs text-primary hover:text-theme-on-surface font-bold no-print"
                 >
                   + Add Assumption
                 </button>
@@ -981,17 +978,17 @@ export default function ProjectClient({ project }: ProjectClientProps) {
 
               <div className="space-y-2.5">
                 {(scope.assumptions || []).map((ass, idx) => (
-                  <div key={idx} className="flex gap-2 items-center p-2 rounded-lg bg-slate-900/30 border border-white/5">
-                    <span className="text-indigo-400 font-bold shrink-0">•</span>
+                  <div key={idx} className="flex gap-2 items-center p-2 rounded-lg theme-panel-lite border border-theme-border">
+                    <span className="text-primary font-bold shrink-0">•</span>
                     <input
                       type="text"
                       value={ass}
                       onChange={(e) => handleAssumptionChange(idx, e.target.value)}
-                      className="bg-transparent border-b border-transparent hover:border-white/20 focus:border-indigo-500 text-xs text-slate-300 focus:outline-none w-full"
+                      className="bg-transparent border-b border-transparent hover:border-theme-border focus:border-theme-border text-xs text-theme-on-surface focus:outline-none w-full"
                     />
                     <button
                       onClick={() => handleDeleteAssumption(idx)}
-                      className="text-slate-600 hover:text-red-400 shrink-0 no-print"
+                      className="text-theme-on-surface-variant hover:text-theme-on-background shrink-0 no-print"
                     >
                       x
                     </button>

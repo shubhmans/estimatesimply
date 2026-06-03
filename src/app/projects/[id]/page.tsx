@@ -32,7 +32,7 @@ export default async function ProjectPage({
   }
 
   return (
-    <div className="relative min-h-screen bg-slate-950 flex flex-col text-slate-100 selection:bg-indigo-500/30">
+    <div className="relative min-h-screen theme-bg flex flex-col text-theme-on-background selection:bg-indigo-500/30">
       {/* Glow meshes */}
       <div className="glow-primary -top-40 left-1/4" />
       <div className="glow-secondary bottom-0 -right-40" />
@@ -46,8 +46,8 @@ export default async function ProjectPage({
       </main>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-white/5 text-center no-print">
-        <span className="text-xs text-slate-500">
+      <footer className="py-8 border-t border-theme-border text-center no-print">
+        <span className="text-xs text-theme-on-surface-variant">
           © {new Date().getFullYear()} EstimateSimply. All rights reserved.
         </span>
       </footer>

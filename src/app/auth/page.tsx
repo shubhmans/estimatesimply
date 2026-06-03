@@ -55,9 +55,8 @@ function AuthForm() {
             setIsLogin(true);
             setError(null);
           }}
-          className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${
-            isLogin ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
-          }`}
+          className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${isLogin ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
+            }`}
         >
           Sign In
         </button>
@@ -66,9 +65,8 @@ function AuthForm() {
             setIsLogin(false);
             setError(null);
           }}
-          className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${
-            !isLogin ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
-          }`}
+          className={`flex-1 py-2 text-sm font-semibold rounded-lg transition-all duration-200 ${!isLogin ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-400 hover:text-white'
+            }`}
         >
           Register
         </button>

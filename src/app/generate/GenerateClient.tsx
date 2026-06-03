@@ -93,42 +93,41 @@ export default function GenerateClient({ user }: GenerateClientProps) {
 
   if (loading) {
     return (
-      <div className="w-full max-w-xl glass-panel p-8 rounded-3xl border border-white/10 shadow-2xl text-center space-y-8 animate-fade-in">
+      <div className="w-full max-w-xl theme-card p-8 rounded-3xl border theme-border shadow-xl text-center space-y-8 animate-fade-in">
         <div className="flex flex-col items-center">
           <div className="relative w-16 h-16 mb-4 flex items-center justify-center">
-            <Loader2 className="w-12 h-12 text-indigo-500 animate-spin absolute" />
-            <Sparkles className="w-5 h-5 text-indigo-400 animate-pulse" />
+            <Loader2 className="w-12 h-12 text-primary animate-spin absolute" />
+            <Sparkles className="w-5 h-5 text-primary-container animate-pulse" />
           </div>
-          <h3 className="text-xl font-bold bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+          <h3 className="text-xl font-bold theme-gradient-text">
             AI Analysis In Progress
           </h3>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-theme-on-surface-variant mt-1">
             Analyzing idea and building proposal scope. Please wait.
           </p>
         </div>
 
         {/* Loading Steps checklist */}
-        <div className="space-y-3.5 text-left border-t border-white/5 pt-6 max-w-md mx-auto">
+        <div className="space-y-3.5 text-left border-t theme-border-soft pt-6 max-w-md mx-auto">
           {LOADING_STEPS.map((step, idx) => {
             const isCompleted = currentStep > idx;
             const isCurrent = currentStep === idx;
             return (
               <div
                 key={idx}
-                className={`flex gap-3 text-xs items-start transition-all duration-300 ${
-                  isCompleted
-                    ? 'text-indigo-400'
-                    : isCurrent
-                    ? 'text-white font-semibold'
-                    : 'text-slate-500'
-                }`}
+                className={`flex gap-3 text-xs items-start transition-all duration-300 ${isCompleted
+                  ? 'text-primary'
+                  : isCurrent
+                    ? 'text-theme-on-surface font-semibold'
+                    : 'text-theme-on-surface-variant'
+                  }`}
               >
                 {isCompleted ? (
-                  <CheckCircle2 className="w-4 h-4 text-indigo-400 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
                 ) : isCurrent ? (
-                  <Loader2 className="w-4 h-4 text-indigo-500 shrink-0 animate-spin mt-0.5" />
+                  <Loader2 className="w-4 h-4 text-primary shrink-0 animate-spin mt-0.5" />
                 ) : (
-                  <div className="w-4 h-4 rounded-full border border-slate-700 shrink-0 mt-0.5" />
+                  <div className="w-4 h-4 rounded-full border theme-border shrink-0 mt-0.5" />
                 )}
                 <span>{step}</span>
               </div>
@@ -136,7 +135,7 @@ export default function GenerateClient({ user }: GenerateClientProps) {
           })}
         </div>
 
-        <div className="text-[10px] text-slate-500 bg-slate-900/50 p-3 rounded-lg border border-white/5">
+        <div className="text-[10px] text-theme-on-surface-variant theme-panel-lite p-3 rounded-lg border theme-border-soft">
           💡 Our advanced Business Analyst prompt takes roughly 10-15 seconds to generate the full hierarchical module list.
         </div>
       </div>
@@ -144,31 +143,31 @@ export default function GenerateClient({ user }: GenerateClientProps) {
   }
 
   return (
-    <div className="w-full max-w-3xl glass-panel p-6 sm:p-8 rounded-3xl border border-white/5 shadow-2xl relative">
+    <div className="w-full max-w-3xl theme-card p-6 sm:p-8 rounded-3xl border theme-border shadow-xl relative">
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-white">Generate Project Scope</h2>
-          <p className="text-xs text-slate-400 mt-1">
+          <h2 className="text-2xl font-bold text-theme-on-surface">Generate Project Scope</h2>
+          <p className="text-xs text-theme-on-surface-variant mt-1">
             Fill in the details below to generate a comprehensive, structured proposal.
           </p>
         </div>
         <div className="flex flex-col items-end">
-          <span className="text-[10px] uppercase font-bold tracking-wider text-slate-400">Available Credits</span>
-          <span className="text-sm font-bold text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full mt-0.5">
+          <span className="text-[10px] uppercase font-bold tracking-wider text-theme-on-surface-variant">Available Credits</span>
+          <span className="theme-tag text-secondary mt-0.5">
             {user?.credits || 0} Credits
           </span>
         </div>
       </div>
 
       {error && (
-        <div className="mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm">
+        <div className="mb-6 p-4 rounded-xl theme-alert-error text-sm">
           {error}
         </div>
       )}
 
       {/* Suggestion Pills */}
       <div className="mb-6">
-        <span className="text-xs font-semibold text-slate-400 block mb-2.5">
+        <span className="text-xs font-semibold text-theme-on-surface-variant block mb-2.5">
           Select standard agency blueprint or try custom idea:
         </span>
         <div className="flex flex-wrap gap-2">
@@ -177,9 +176,9 @@ export default function GenerateClient({ user }: GenerateClientProps) {
               key={idx}
               type="button"
               onClick={() => handlePillClick(template)}
-              className="px-3.5 py-1.5 rounded-xl bg-slate-900 border border-white/5 hover:border-indigo-500/30 text-xs font-medium text-slate-300 hover:text-white transition-all duration-200"
+              className="px-3.5 py-1.5 rounded-xl theme-btn-secondary text-xs font-medium text-theme-on-surface-variant hover:text-theme-on-background transition-all duration-200"
             >
-              🚀 {template.title}
+              {template.title}
             </button>
           ))}
         </div>
@@ -190,11 +189,11 @@ export default function GenerateClient({ user }: GenerateClientProps) {
         {/* Project Description Textarea */}
         <div className="space-y-1.5">
           <div className="flex justify-between items-center">
-            <label className="text-xs font-semibold text-slate-300">Project Idea & Scope Description</label>
+            <label className="text-xs font-semibold text-theme-on-surface-variant">Project Idea & Scope Description</label>
             <button
               type="button"
               onClick={handleClear}
-              className="text-[10px] font-bold text-slate-500 hover:text-white transition-colors"
+              className="text-[10px] font-bold text-theme-on-surface-variant hover:text-theme-on-background transition-colors"
             >
               Clear Form
             </button>
@@ -205,7 +204,7 @@ export default function GenerateClient({ user }: GenerateClientProps) {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
             placeholder="E.g., Need a mobile fitness app for workouts where users can track hydration, earn points, and viewleaderboards. Needs integration with Stripe and an admin panel."
-            className="w-full bg-slate-900 border border-white/10 rounded-xl p-3.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors resize-y"
+            className="w-full theme-input rounded-xl p-3.5 text-sm text-theme-on-surface placeholder-theme-on-surface-variant transition-colors resize-y"
           />
         </div>
 
@@ -213,37 +212,37 @@ export default function GenerateClient({ user }: GenerateClientProps) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Industry */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-300">Target Industry (Optional)</label>
+            <label className="text-xs font-semibold text-theme-on-surface-variant">Target Industry (Optional)</label>
             <input
               type="text"
               value={industry}
               onChange={(e) => setIndustry(e.target.value)}
               placeholder="e.g., Healthcare, FinTech"
-              className="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+              className="w-full theme-input rounded-xl px-3 py-2 text-sm text-theme-on-surface placeholder-theme-on-surface-variant transition-colors"
             />
           </div>
 
           {/* Budget Range */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-300">Target Budget (Optional)</label>
+            <label className="text-xs font-semibold text-theme-on-surface-variant">Target Budget (Optional)</label>
             <input
               type="text"
               value={budget}
               onChange={(e) => setBudget(e.target.value)}
               placeholder="e.g., $10k - $25k"
-              className="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+              className="w-full theme-input rounded-xl px-3 py-2 text-sm text-theme-on-surface placeholder-theme-on-surface-variant transition-colors"
             />
           </div>
 
           {/* Timeline Target */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-slate-300">Timeline Target (Optional)</label>
+            <label className="text-xs font-semibold text-theme-on-surface-variant">Timeline Target (Optional)</label>
             <input
               type="text"
               value={timeline}
               onChange={(e) => setTimeline(e.target.value)}
               placeholder="e.g., 6-8 weeks"
-              className="w-full bg-slate-900 border border-white/10 rounded-xl px-3 py-2 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+              className="w-full theme-input rounded-xl px-3 py-2 text-sm text-theme-on-surface placeholder-theme-on-surface-variant transition-colors"
             />
           </div>
         </div>
@@ -251,9 +250,9 @@ export default function GenerateClient({ user }: GenerateClientProps) {
         {/* Submit */}
         <button
           type="submit"
-          className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-bold text-sm shadow-xl shadow-indigo-600/20 transition-all duration-200 transform hover:-translate-y-0.5"
+          className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-xl theme-btn-primary text-white font-bold text-sm shadow-xl transition-all duration-200 transform hover:-translate-y-0.5"
         >
-          <Sparkles className="w-4 h-4 text-indigo-200" />
+          <Sparkles className="w-4 h-4 text-on-primary" />
           <span>Analyze & Compile Proposal Scope</span>
         </button>
       </form>

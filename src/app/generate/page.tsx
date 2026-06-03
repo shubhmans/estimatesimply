@@ -8,7 +8,7 @@ export default async function GeneratePage() {
   const user = await getCurrentUser();
 
   return (
-    <div className="relative min-h-screen bg-slate-950 flex flex-col text-slate-100">
+    <div className="relative min-h-screen theme-bg flex flex-col text-theme-on-background">
       {/* Background glow meshes */}
       <div className="glow-primary -top-40 left-1/4" />
       <div className="glow-secondary bottom-0 -right-40" />
@@ -22,8 +22,8 @@ export default async function GeneratePage() {
       </main>
 
       {/* Footer */}
-      <footer className="py-8 border-t border-white/5 text-center no-print">
-        <span className="text-xs text-slate-500">
+      <footer className="py-8 border-t theme-border text-center no-print">
+        <span className="text-xs text-theme-on-surface-variant">
           © {new Date().getFullYear()} EstimateSimply. Powered by Gemini 2.0 Flash.
         </span>
       </footer>
